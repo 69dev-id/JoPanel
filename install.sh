@@ -48,6 +48,13 @@ echo "Building Agent..."
 cd /opt/jopanel/agent
 go build -o jopanel-agent
 
+# Generate Agent Env if not exists
+if [ ! -f .env ]; then
+  echo "Generating Agent .env"
+  echo "AGENT_PORT=8081" > .env
+  echo "AGENT_SECRET=$(openssl rand -hex 16)" >> .env
+fi
+
 # Create Systemd Services
 
 # Backend Service
