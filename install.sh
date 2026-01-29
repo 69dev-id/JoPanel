@@ -34,6 +34,8 @@ mysql -e "FLUSH PRIVILEGES;"
 
 # Setup Project Directory
 mkdir -p /opt/jopanel
+echo "Copying files to /opt/jopanel..."
+cp -r backend agent frontend /opt/jopanel/
 # (In real scenario, git clone here. For now we assume files are present or copied)
 
 # Build Backend
