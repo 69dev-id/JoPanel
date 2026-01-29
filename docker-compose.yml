@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  # Database
+  db:
+    image: mariadb:10.11
+    container_name: jopanel_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: jopanel
+      MYSQL_USER: jopanel
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  # PHPMyAdmin for easier DB management during dev
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: jopanel_pma
+    environment:
+      PMA_HOST: db
+      UPLOAD_LIMIT: 64M
+    ports:
+      - "8081:80"
+    depends_on:
+      - db
+
+  # Redis (Optional, effectively used for caching if needed later)
+  redis:
+    image: redis:alpine
+    container_name: jopanel_redis
+    ports:
+      - "6379:6379"
+
+volumes:
+  db_data:
